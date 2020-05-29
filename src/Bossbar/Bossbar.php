@@ -33,6 +33,10 @@ class Bossbar extends PluginBase implements Listener
     {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
+    
+    public static function getInstance():Bossbar {
+        return self::$instance;
+    }
 
     public function new(Player $player):bool
     {
