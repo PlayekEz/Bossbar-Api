@@ -52,7 +52,7 @@ class Bossbar extends PluginBase implements Listener
         $pk->position = new Vector3();
 
         $player->sendDataPacket($pk);
-        $This->bossbars[$player->getLowerCaseName()] = $id;
+        $this->bossbars[$player->getLowerCaseName()] = $id;
         $this->sendBossPacket($player, '', BossEventPacket::TYPE_SHOW);
     }
 
