@@ -90,7 +90,7 @@ class Bossbar extends PluginBase implements Listener
     }
 
     public function getID(): ?int {
-        return (isset($this->bossbars[$player->getLowerCaseName()])) ? $this->bossbars[$player->getLowerCaseName() : null;
+        return (isset($this->bossbars[$player->getLowerCaseName()])) ? $this->bossbars[$player->getLowerCaseName()] : null;
     }
 }
 ?>
