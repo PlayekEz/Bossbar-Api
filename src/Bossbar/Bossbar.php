@@ -48,15 +48,19 @@ class Bossbar extends PluginBase implements Listener
         $pk = new AddActorPacket();
         $pk->entityRuntimeId = $id;
         $pk->type = EntityIds::SLIME;
-        $pk->metadata = [Entity::DATA_FLAGS >> [Entity::DATA_TYPE_LONG, ((1 << Entity::DATA_FLAG_INVISIBLE) | (1 << Entity::DATA_FLAG_IMMOBILE))], Entity::DATA_NAMETAG => [Entity::DATA_TYPE_STRING, '']];
+        $pk->metadata = [
+			Entity::DATA_FLAGS => [Entity::DATA_TYPE_LONG, ((1 << Entity::DATA_FLAG_INVISIBLE) | (1 << Entity::DATA_FLAG_IMMOBILE))],
+			Entity::DATA_NAMETAG => [Entity::DATA_TYPE_STRING, '']
+		];
         $pk->position = new Vector3();
 
         $player->sendDataPacket($pk);
         $this->bossbars[$player->getLowerCaseName()] = $id;
         $this->sendBossPacket($player, '', BossEventPacket::TYPE_SHOW);
+        return true;
     }
 
-    public function sendBossPacket(Player $player, String $tile, int $eventType = BossEventPacket::TYPE_TITLE):void {
+    public function sendBossPacket(Player $player, String $title, int $eventType = BossEventPacket::TYPE_TITLE):void {
         if(!isset($this->bossbars[$player->getLowerCaseName()])) return;
         $id = $this->getID($player->getLowerCaseName());
 
@@ -89,8 +93,9 @@ class Bossbar extends PluginBase implements Listener
         }
     }
 
-    public function getID(): ?int {
-        return (isset($this->bossbars[$player->getLowerCaseName()])) ? $this->bossbars[$player->getLowerCaseName()] : null;
+    public function getID($player): ?int {
+    	$player = ($player instanceof Player) ? $player->getLowerCaseName() : $player;
+        return (isset($this->bossbars[$player])) ? $this->bossbars[$player] : null;
     }
 }
 ?>
